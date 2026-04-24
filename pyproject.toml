@@ -12,6 +12,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.8"
 pysigma = ">=1.0.0"
+# Fix nº1 -> For the dependencies check. The error that was being given was due to the modern sigma-cli conflict. This made it so that the legacy compiler was called!
 
 [tool.poetry.dev-dependencies]
 

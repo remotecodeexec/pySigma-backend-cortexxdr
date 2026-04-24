@@ -24,10 +24,12 @@ class InvalidFieldTransformation(DetectionItemFailureTransformation):
 class ReplaceIntegrityLevelQueryTransformation(QueryPostprocessingTransformation):
     """Replace query part specified by regular expression with a given string."""
 
+    # The 'pipeline' argument was removed from the core PySigma engine's post-processing transformation signature. 
+    # Leaving it in causes a missing positional argument TypeError.
     def apply(
         self, rule: SigmaRule, query: Union[str, dict]
     ) -> Union[str, dict]:
-
+    
         if isinstance(query, dict):
             output_type = 'json'
             query = json.dumps(query)
@@ -37,6 +39,7 @@ class ReplaceIntegrityLevelQueryTransformation(QueryPostprocessingTransformation
         self.identifier = 'replace_integrity_thing'
         field_name = 'action_process_integrity_level'
 
+        # Removed 'pipeline' argument from the super() call to match the updated function signature above.
         super().apply(rule, query)
 
         integrity_level_ranges ={
