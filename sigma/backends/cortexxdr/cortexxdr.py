@@ -128,7 +128,7 @@ class CortexXDRBackend(TextQueryBackend):
     deferred_separator : ClassVar[str] = "\n| "           # String used to join multiple deferred query parts
     #deferred_only_query : ClassVar[str] = "*"            # String used as query if final query only contains deferred expression
 
-    def finalize_query_default(self, rule: SigmaRule, query: str, index: int, state: ConversionState) -> Any:
+    def finalize_query_default(self, rule: SigmaRule, query: str, index: int, state: ConversionState, output_format: str) -> Any:
         """
         Finalize conversion result of a query
         This will add the dataset name to the beginning of the query based on the rule category.
@@ -144,7 +144,7 @@ class CortexXDRBackend(TextQueryBackend):
     def finalize_output_default(self, queries: List[str]) -> Any:
         return queries
     
-    def finalize_query_json(self, rule: SigmaRule, query: str, index: int, state: ConversionState) -> Any:
+    def finalize_query_json(self, rule: SigmaRule, query: str, index: int, state: ConversionState, output_format: str) -> Any:
         index_type, index = state.processing_state.get('dataset_preset', 'dataset::xdr_dataset').split('::')
 
         full_query = f'config case_sensitive = false | {index_type}={index} | filter {query}'
